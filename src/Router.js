@@ -3,7 +3,7 @@ import { Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import GoalList from './components/GoalList';
 import GoalCreate from './components/GoalCreate';
-
+import GoalEdit from './components/GoalEdit';
 
 const RouterComponent = () => {
   return (
@@ -16,9 +16,8 @@ const RouterComponent = () => {
           key="goalList" component={GoalList} title="My goals"
           rightTitle="Add" onRight={() => Actions.goalCreate()} initial
         />
-        <Scene
-          key="goalCreate" component={GoalCreate} title="Create dream goal"
-        />
+        <Scene key="goalCreate" component={GoalCreate} title="Create dream goal" />
+        <Scene key="goalEdit" component={GoalEdit} title="Edit goal" />
       </Scene>
     </Router>
   );

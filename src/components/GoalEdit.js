@@ -1,14 +1,21 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { goalUpdate, goalCreate } from '../actions';
+import { goalUpdate, goalSave } from '../actions';
 import { Card, CardSection, Button } from './common';
 import GoalForm from './GoalForm';
 
-class GoalCreate extends Component {
+class GoalEdit extends Component {
+
+  componentWillMount() {
+    _.each(this.props.goal, (value, prop) => {
+      this.props.goalUpdate({ prop, value });
+    });
+  }
 
   onButtonPress() {
     const { name, year, reason, description } = this.props;
-    this.props.goalCreate({ name, reason, year: year || '2017', description });
+    this.props.goalSave({ name, reason, year, description, uid: this.props.goal.uid });
   }
 
   render() {
@@ -17,7 +24,7 @@ class GoalCreate extends Component {
         <GoalForm {...this.props} />
         <CardSection>
           <Button onPress={this.onButtonPress.bind(this)}>
-            Create
+            Save
           </Button>
         </CardSection>
       </Card>
@@ -30,4 +37,4 @@ const mapStateToProps = (state) => {
   return { name, year, reason, description };
 };
 
-export default connect(mapStateToProps, { goalUpdate, goalCreate })(GoalCreate);
+export default connect(mapStateToProps, { goalUpdate, goalSave })(GoalEdit);

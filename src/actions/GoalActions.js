@@ -36,3 +36,15 @@ export const goalsFetch = () => {
       });
   };
 };
+
+export const goalSave = ({ name, reason, year, description, uid }) => {
+  const { currentUser } = firebase.auth();
+
+  return () => {
+    firebase.database().ref(`users/${currentUser.uid}/goals/${uid}`)
+      .set({ name, reason, year, description })
+      .then(() => {
+        Actions.goalList({ type: 'reset' });
+      });
+  };
+};
